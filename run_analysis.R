@@ -49,8 +49,8 @@ for(i in 1:subjectLen) {
 }
 
 #Step6
-write.table(result, "tidyData_with_means2.txt") 
+write.table(result, "tidyData_with_means.txt") 
 
 #Test
-data2 <- read.table("./tidyData_with_means2.txt")
-data2[1:4, 1:4]
+data <- read.table("./tidyData_with_means.txt")
+data[1:4, 1:4]
