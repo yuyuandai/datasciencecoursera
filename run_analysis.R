@@ -37,9 +37,9 @@ for(i in 1:subjectLen) {
         for(j in 1:activityLen) {
                 result[row, 1] <- sort(unique(joinSubject)[, 1])[i]
                 result[row, 2] <- activity[j, 2]
-                bool1 <- i == cleanedData$subject
-                bool2 <- activity[j, 2] == cleanedData$activity
-                result[row, 3:columnLen] <- colMeans(cleanedData[bool1&bool2, 3:columnLen])
+                iSubject <- i == cleanedData$subject
+                jActivity <- activity[j, 2] == cleanedData$activity
+                result[row, 3:columnLen] <- colMeans(cleanedData[iSubject&jActivity, 3:columnLen])
                 row <- row + 1
         }
 }
