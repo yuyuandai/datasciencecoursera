@@ -20,6 +20,7 @@ Step1:
  Combine testData to trainData to generate a joinData; combine testLabel to trainLabel to joinLabel; combine testSubject to trainSubject to generate joinSubject using rbind(). Name the joinSubject as subject using names().
  
 Step2:
+
  Read the features.txt file from the "Project" folder and store them in a table called features. We only extract the measurements on the mean and standard deviation. 
  
  To complish this, we first find the mean and std names in the features to form an index called meanStdIndices. Then we extract the data from joinData using the index. We store the extracted data in meanStdData and replace the meanStdData second column with features's second column content and remove the () in that name using gsub().
@@ -53,8 +54,13 @@ Read the tidy data to table called data. Look at the first 4 columns and first 4
 It should give you a result like:
 
 > data[1:4,1:4]
+
   subject          activity tBodyAcc.mean.X tBodyAcc.mean.Y
+  
 1       1           walking       0.2773308    -0.017383819
+
 2       1   walkingupstairs       0.2554617    -0.023953149
+
 3       1 walkingdownstairs       0.2891883    -0.009918505
+
 4       1           sitting       0.2612376    -0.001308288
