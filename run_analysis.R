@@ -1,5 +1,5 @@
 #setwd("P:/datasciencecoursera")
-
+#Step1
 trainData <- read.table("Project/train/X_train.txt")
 testData <- read.table("Project/test/X_test.txt")
 joinData <- rbind(trainData, testData)
@@ -13,19 +13,23 @@ trainLabel <- read.table("Project/train/y_train.txt")
 testLabel <- read.table("Project/test/y_test.txt") 
 joinLabel <- rbind(trainLabel, testLabel)
 
+#Step2
 features <- read.table("Project/features.txt")
 meanStdIndices <- grep("mean\\(\\)|std\\(\\)", features[, 2])
 meanStdData <- joinData[, meanStdIndices]
 names(meanStdData) <- gsub("\\(\\)", "", features[meanStdIndices, 2])
 
+#Step3
 activity <- read.table("Project/activity_labels.txt")
 activity[, 2] <- tolower(gsub("_", "", activity[, 2]))
 activityLabel <- activity[joinLabel[, 1], 2]
 joinLabel[, 1] <- activityLabel
 names(joinLabel) <- "activity"
 
+#Step4
 cleanedData <- cbind(joinSubject, joinLabel, meanStdData)
 
+#Step5
 subjectLen <- length(table(joinSubject)) 
 activityLen <- dim(activity)[1] 
 columnLen <- dim(cleanedData)[2]
@@ -43,7 +47,10 @@ for(i in 1:subjectLen) {
                 row <- row + 1
         }
 }
-write.table(result, "tidyData_with_means.txt") 
 
-data <- read.table("./tidyData_with_means.txt")
-data[1:12, 1:3]
+#Step6
+write.table(result, "tidyData_with_means2.txt") 
+
+#Test
+data2 <- read.table("./tidyData_with_means2.txt")
+data2[1:4, 1:4]
