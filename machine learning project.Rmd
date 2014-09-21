@@ -1,0 +1,92 @@
+---
+title: "Machine Learning project"
+author: "Yuyuan Dai"
+date: "September 20, 2014"
+output: html_document
+---
+
+# Executive Summary
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. In this report, I used the data from accelerometers on the belt, forearm, arm , and dumbbell of 6 participants to construct model to quantify how well they perform barbell lifts. And I used the model I contructed to predict the exercsing manner in the test data.  
+
+```{r message=FALSE, cache=FALSE}
+library(caret)
+library(randomForest)
+```
+
+# Load Data and Clean Data
+
+```{r}
+train<-read.csv("pml-training.csv",header = TRUE, sep = ",",na.strings = c("NA", ""))
+dim(train)
+#head(train,n=3)
+#tail(train,n=3)
+summary(train$classe)
+train1 <- train[, -c(1:7)]
+dim(train1)
+```
+When I read the data and looked at the data, I found the first 7 variables are not useful for the model contruction. So I get rid of the first columns of the data. I also found there are a lots of missing values in the dataset. 
+
+```{r, echo=FALSE}
+na_count <- sapply(train1, function(x) {sum(is.na(x))})
+table(na_count)
+```
+The missing values are consistently and uniformly present in certain columns. And there are over 95% of missing values in those columns. So I further cleaned the data by removing the columns containing the missing values above 90%.
+
+```{r}
+naRatio <- function(x) {
+  n <- length(x)
+  nas <- sum(is.na(x))
+  return(nas/n)
+}
+variable_naRatio<- sapply(train1, naRatio)
+train2 <- train1[, variable_naRatio < 0.1]
+dim(train2)
+```
+
+# Data Partition
+
+I used 70% of the data from the training set for model construction and the rest of for model validation.
+```{r}
+inTrain = createDataPartition(y=train2$classe, p=0.7, list=FALSE)
+training = train2[inTrain,]
+testing = train2[-inTrain,]
+dim(training)
+```
+
+# Model Contruction
+
+Due to the large number of variables in the dataset, I chose Random Forest model to fit the data.
+```{r message=FALSE }
+model<-randomForest(classe~., data=training, importance=TRUE)
+varImpObj <- varImp(model)
+varImpPlot(model, main = "Variable Importance of Top 20", top = 20)
+```
+
+# Model Validation and Error Rate
+
+```{r}
+pred<- predict(model,testing)
+confTable<-confusionMatrix(pred,testing$classe)
+errorRate<-1-sum(diag(confTable$table))/sum(confTable$table)
+errorRate
+```
+The error rate for my model is less than 1%.
+
+# Model Prediction
+
+```{r}
+test<-read.csv("pml-testing.csv",header = TRUE, sep = ",",na.strings = c("NA", ""))
+dim(test)
+test1 <- test[, -c(1:7)]
+dim(test1)
+
+variable_naRatio1<- sapply(test1, naRatio)
+test2 <- test1[, variable_naRatio1 < 0.1]
+dim(test2)
+
+pred<- predict(model,test2)
+pred
+```
+
+# Summary
+I used Random Forest model to fit my data and got a over 99% accuracy for the trainig dat fitting. With this model, I predicted the manner of how well the people performed barbell lifts in the testing data.
