@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Son's Height Prediction from Father's Height</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Son's Height Prediction from Father's Height">
+  <meta name="author" content="Yuyuan Dai">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Son's Height Prediction from Father's Height</h1>
+    <h2>Shiny Product</h2>
+    <p>Yuyuan Dai<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The Son&#39;s Height Prediction from Father&#39;s height was based on linear model fitting Pearson&#39;s data set on heights of fathers and their sons. With this model, we can predict son&#39;s height range from father&#39;s height. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p>The equation for the calculation was from the linear model below.</p>
+
+<pre><code class="r">library(UsingR)
+</code></pre>
+
+<pre><code>## Warning: package &#39;UsingR&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: MASS
+## Loading required package: HistData
+</code></pre>
+
+<pre><code>## Warning: package &#39;HistData&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: Hmisc
+</code></pre>
+
+<pre><code>## Warning: package &#39;Hmisc&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: grid
+## Loading required package: lattice
+## Loading required package: survival
+## Loading required package: splines
+## Loading required package: Formula
+</code></pre>
+
+<pre><code>## Warning: package &#39;Formula&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;
+## 
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, round.POSIXt, trunc.POSIXt, units
+## 
+## Loading required package: aplpack
+</code></pre>
+
+<pre><code>## Warning: package &#39;aplpack&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: tcltk
+## Loading required package: quantreg
+</code></pre>
+
+<pre><code>## Warning: package &#39;quantreg&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: SparseM
+</code></pre>
+
+<pre><code>## Warning: package &#39;SparseM&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;SparseM&#39;
+## 
+## The following object is masked from &#39;package:base&#39;:
+## 
+##     backsolve
+## 
+## 
+## Attaching package: &#39;quantreg&#39;
+## 
+## The following object is masked from &#39;package:Hmisc&#39;:
+## 
+##     latex
+## 
+## The following object is masked from &#39;package:survival&#39;:
+## 
+##     untangle.specials
+## 
+## 
+## Attaching package: &#39;UsingR&#39;
+## 
+## The following object is masked from &#39;package:survival&#39;:
+## 
+##     cancer
+</code></pre>
+
+<pre><code class="r">library(caret)
+</code></pre>
+
+<pre><code>## Warning: package &#39;caret&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## Loading required package: ggplot2
+</code></pre>
+
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.1.1
+</code></pre>
+
+<pre><code>## 
+## Attaching package: &#39;ggplot2&#39;
+## 
+## The following object is masked from &#39;package:UsingR&#39;:
+## 
+##     movies
+## 
+## 
+## Attaching package: &#39;caret&#39;
+## 
+## The following object is masked from &#39;package:survival&#39;:
+## 
+##     cluster
+</code></pre>
+
+<pre><code class="r">data(father.son)
+model&lt;-lm(sheight ~ fheight, data=father.son)
+model$coef
+</code></pre>
+
+<pre><code>## (Intercept)     fheight 
+##     33.8866      0.5141
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <p>The input limit for father&#39;s height was based on the min and max in Pearson&#39;s data set on heights of fathers and their sons. I set the range for the input is 40 to 80 inches as two decimals. </p>
+
+<pre><code class="r">summary(father.son$fheight)
+</code></pre>
+
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    59.0    65.8    67.8    67.7    69.6    75.4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <p>The function for calculating son&#39;s height range is the following:</p>
+
+<pre><code class="r">sheight&lt;-function(input){
+newdata&lt;-data.frame(fheight=input)
+pred&lt;-predict(model, newdata, interval=&quot;predict&quot;)
+pred
+}
+</code></pre>
+
+<p>For our example (father&#39;s height = 45 inches) the diagnostic would be:</p>
+
+<pre><code class="r">sheight( 45 )
+</code></pre>
+
+<pre><code>##     fit   lwr   upr
+## 1 57.02 52.09 61.95
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Conclusion</h2>
+  </hgroup>
+  <article data-timings="">
+    <h2>The son&#39;s height prediction was based on the previous dataset. I used a very simple linear regression model to fit Pearson&#39;s data set on heights of fathers and their sons. Based on the linear model, we can get an estimated range of son&#39;s height.</h2>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title=''>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Conclusion'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

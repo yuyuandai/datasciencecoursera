@@ -1,0 +1,59 @@
+---
+title       : Son's Height Prediction from Father's Height
+subtitle    : Shiny Product
+author      : Yuyuan Dai
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+## Introduction
+
+The Son's Height Prediction from Father's height was based on linear model fitting Pearson's data set on heights of fathers and their sons. With this model, we can predict son's height range from father's height. 
+
+
+---
+
+The equation for the calculation was from the linear model below.
+```{r}
+library(UsingR)
+library(caret)
+data(father.son)
+model<-lm(sheight ~ fheight, data=father.son)
+model$coef
+```
+
+---
+
+The input limit for father's height was based on the min and max in Pearson's data set on heights of fathers and their sons. I set the range for the input is 40 to 80 inches as two decimals. 
+
+```{r}
+summary(father.son$fheight)
+```
+
+---
+
+The function for calculating son's height range is the following:
+
+```{r}
+sheight<-function(input){
+newdata<-data.frame(fheight=input)
+pred<-predict(model, newdata, interval="predict")
+pred
+}
+```
+
+For our example (father's height = 45 inches) the diagnostic would be:
+
+```{r}
+sheight( 45 )
+```
+
+---
+## Conclusion
+
+The son's height prediction was based on the previous dataset. I used a very simple linear regression model to fit Pearson's data set on heights of fathers and their sons. Based on the linear model, we can get an estimated range of son's height.
+---
